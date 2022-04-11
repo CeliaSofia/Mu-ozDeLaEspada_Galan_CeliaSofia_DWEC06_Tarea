@@ -6,13 +6,148 @@ let indice = url.lastIndexOf('/');
 url= url.slice(0,indice);
 
 function cargaInicial(){
-    cargaDatos(); // Creamos los datos que va a tener nuestra página
     muestraTiendas(); // selección y mostrado de las tiendas disponibles
     selectTiendas();
     selectCategorias();
-    return storeHouse;
 }
 
+function formAnadirProducto(){
+    let categorias = storeHouse.getterCategories();
+    let formProductos = "<form id='formProductosAnadir' class='formProductos'>";
+    formProductos += "Tipo de producto:"
+    formProductos += "<select id='selectTipoProducto' onChange='cambioTipo()'>";
+        formProductos += '<option value="Coche">Coche</option>';
+        formProductos += '<option value="Moto">Moto</option>';
+        formProductos += '<option value="Bicicleta">Bicicleta</option>';
+    formProductos += "</select><br><br>";
+    formProductos += "Número de serie:<input type='text' id='numSerie'></input><br><br>";
+    formProductos += "Nombre del producto:<input type='text' id='nombreProducto'></input><br><br>";
+    formProductos += "Descripción:<input type='text' id='descripcionProducto'></input><br><br>";
+    formProductos += "Precio:<input type='number' id='precioProducto'></input><br><br>";
+    formProductos += "Tasa:<input type='text' id='tasaProducto'></input><br><br>";
+    formProductos += "Imagen:<input type='file' id='imagenProducto'></input><br><br>";
+    formProductos += "Categoria: ";
+    formProductos += ' <select class="selectCategoriaAnadir" id="selectCategoriaAnadir" multiple>';
+    categorias.forEach(categoria => {
+        formProductos += '<option value='+ categoria.getTitle +'>' + categoria.getTitle + '</option>';
+    });
+    formProductos += "</select><br><br>";
+    formProductos += "<div id='divTipo'>";
+    formProductos += "Color:<input type='text' id='colorCoche'></input><br><br>";           
+    formProductos += "Tipo:<input type='text' id='tipoCoche'></input><br><br>";           
+    formProductos += "Power:<input type='text' id='powerCoche'></input><br><br>";
+    formProductos += "</div>";
+    formProductos += "</form>";
+    formProductos += "<button onclick='anadeProducto()'>Añadir Producto</button>";
+    document.getElementById('contenido').innerHTML = formProductos;
+}
+
+function cambioTipo(){
+    let tipoProducto = document.getElementById('selectTipoProducto').value;
+    let formProductos="";
+
+    switch(tipoProducto){
+        case "Coche":
+            formProductos += "Color:<input type='text' id='colorCoche'></input><br><br>";           
+            formProductos += "Tipo:<input type='text' id='tipoCoche'></input><br><br>";           
+            formProductos += "Power:<input type='text' id='powerCoche'></input><br><br>";           
+            break;
+        case "Moto":
+            formProductos += "Tipo:<input type='text' id='tipoMoto'></input><br><br>";       
+            formProductos += "Color:<input type='text' id='colorMoto'></input><br><br>";               
+            formProductos += "Power:<input type='text' id='powerMoto'></input><br><br>";           
+            break;
+        case "Bicicleta":
+            formProductos += "Tipo:<input type='text' id='tipoBici'></input><br><br>";       
+            formProductos += "Material:<input type='text' id='materialBici'></input><br><br>";               
+            formProductos += "Talla:<input type='text' id='tallaBici'></input><br><br>";           
+
+            break;
+        default:
+            console.log("algo esta saliendo mal");
+    }
+    document.getElementById('divTipo').innerHTML = formProductos;
+}
+function anadeProducto(){
+    // registro de elementos del formulario
+    let tipoProducto = document.getElementById('selectTipoProducto').value;
+    let numSerie = document.getElementById('numSerie').value;
+    let nombreProducto = document.getElementById('nombreProducto').value;
+    let descripcionProducto = document.getElementById('descripcionProducto').value;
+    let precioProducto = document.getElementById('precioProducto').value;
+    let tasaProducto = document.getElementById('tasaProducto').value;
+    let imagenProducto = document.getElementById('imagenProducto').value;
+    let categoria = document.getElementById('selectCategoriaAnadir');
+    let categorias = categoria.options;
+    let listaCategorias = []
+    for (let i = 0; i < categorias.length; i++){
+        if (categorias[i].selected == true){
+            listaCategorias.push(categorias[i].value);
+        }
+    }
+    let producto;
+    switch(tipoProducto){
+        case "Coche":
+            let colorCoche = document.getElementById('colorCoche').value;
+            let tipoCoche = document.getElementById('tipoCoche').value;
+            let powerCoche = document.getElementById('powerCoche').value;
+            producto = new Coche(numSerie, nombreProducto, descripcionProducto, precioProducto, tasaProducto, imagenProducto, listaCategorias, colorCoche, tipoCoche, powerCoche);            
+            break;
+        case "Moto":
+            let tipoMoto = document.getElementById('tipoMoto').value;
+            let colorMoto = document.getElementById('colorMoto').value;
+            let powerMoto = document.getElementById('powerMoto').value;
+            producto = new Moto(numSerie, nombreProducto, descripcionProducto, precioProducto, tasaProducto, imagenProducto, listaCategorias, tipoMoto, colorMoto, powerMoto);
+    
+            break;
+        case "Bicicleta":
+            let tipoBici = document.getElementById('tipoBici').value;
+            let materialBici = document.getElementById('materialBici').value;
+            let tallaBici = document.getElementById('tallaBici').value;
+            producto = new Bicicleta(numSerie, nombreProducto, descripcionProducto, precioProducto, tasaProducto, imagenProducto, listaCategorias, tipoBici, materialBici, tallaBici);
+
+            break;
+        default:
+            console.log("algo esta saliendo mal");
+    }
+    storeHouse.addProduct(producto);
+}
+
+function formEliminarProducto(){
+    let productos = storeHouse.getProductosAlmacen;
+    let producto = productos.next();
+    let selectProductos = "<select name='selectProductos' id='selectProductos'>";
+    while (!producto.done){
+        selectProductos += "<option value="+ producto.value.getSerialNumber +">" + producto.value.getNameProduct + "</option>";
+        producto = productos.next();
+    }
+    selectProductos += "</select>";
+    selectProductos += "<button>Eliminar Producto</button>"
+    document.getElementById('contenido').innerHTML = selectProductos;
+}
+
+function formGestionaCategoria(){
+    let formCategoria = "<form class='formCategoria'>";
+    formCategoria += "Título:<input type='text'></input><br><br>";
+    formCategoria += "Descripción:<input type='text'></input><br><br>";
+    formCategoria += "<button>Añadir Categoría</button>";
+    formCategoria += "<button>Eliminar Categoría</button>";
+    document.getElementById('contenido').innerHTML = formCategoria;
+}
+
+function formGestionaTienda(){
+    let formTienda = "<form class='formTienda'>";
+    formTienda += "Cif:<input type='text'></input><br><br>";
+    formTienda += "Nombre de la tienda:<input type='text'></input><br><br>";
+    formTienda += "Dirección:<input type='text'></input><br><br>";
+    formTienda += "Teléfono:<input type='number'></input><br><br>";
+    formTienda += "Coordenadas:<input type='text'></input><br><br>";
+    formTienda += "Productos:<input type='text'></input><br><br>";
+    formTienda += "Stock:<input type='number'></input><br><br>";
+    formTienda += "<button>Añadir Producto</button>";
+    formTienda += "</form>";
+    document.getElementById('contenido').innerHTML = formTienda;
+}
 
 function muestraTiendas(){
     let tiendas = storeHouse.getterShops();
@@ -33,7 +168,7 @@ function selectTiendas(){
     selectTiendas += "</select>";
     selectTiendas += "<button onclick='seleccionTiendas();'>Ir a tienda</button>";
     
-    document.getElementById('header').innerHTML += selectTiendas;
+    document.getElementById('contenido').innerHTML += selectTiendas;
 } 
 
 function seleccionTiendas(){
@@ -60,7 +195,7 @@ function selectCategorias(){
     });
     selectCategorias += "</select>";
     selectCategorias += "<button onclick='seleccionCategorias();'>Ir a categoría</button>";
-    document.getElementById('header').innerHTML += selectCategorias;
+    document.getElementById('contenido').innerHTML += selectCategorias;
 }
 
 function seleccionCategorias(){

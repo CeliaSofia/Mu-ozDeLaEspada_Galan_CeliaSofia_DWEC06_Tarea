@@ -34,3 +34,11 @@ table td{
 .tablaTiendas tr:first-child>* { 
     border-left:10; 
 }
+nav a:hover{
+    color: black;
+    text-decoration: none;
+}
+nav a{
+    color: white;
+    text-decoration: none;
+}
