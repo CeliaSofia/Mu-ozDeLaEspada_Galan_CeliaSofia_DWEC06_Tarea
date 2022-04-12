@@ -114,17 +114,13 @@ let StoreHouse = (function () { //La función anónima devuelve un método getIn
             // Método removeProduct
             removeProduct(productoABorrar){
                 let encontrado = false;
+                let productos = [];
                 for (let i= 0; i<this.#productosAlmacen.length; i++){
-                    if (this.#productosAlmacen[i]['product'].getSerialNumber == productoABorrar.getSerialNumber){
+                    if (this.#productosAlmacen[i].getSerialNumber == productoABorrar){
                         encontrado = true;
                         for (let j=0; j<this.#tiendasAlmacen.length; j++){ // Recorro las tiendas
-                            for (let x=0; x<this.#tiendasAlmacen[j]['products'].length; x++){ // Recorro cada producto de las tiendas
-                                if (this.#tiendasAlmacen[j]['products'][x].getSerialNumber == productoABorrar.getSerialNumber){
-                                    this.#tiendasAlmacen[j]['products'].splice(x, 1); // Borro los productos de la lista tiendas que coincidan 
-                                }
-                            }
+                            this.#tiendasAlmacen[j].eliminarProducto(productoABorrar);
                         } 
-                        
                         this.#productosAlmacen.splice(i, 1); // Borramos el producto de la lista almacén
                         return this.#productosAlmacen.length;
                     }

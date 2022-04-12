@@ -1,15 +1,14 @@
 let storeHouse; // lo declaramos como global
 let myWindow = null;
 let ventanasAbiertas = [];
-let url = window.location.pathname;
-let indice = url.lastIndexOf('/');
-url= url.slice(0,indice);
 
 function cargaInicial(){
     muestraTiendas(); // selección y mostrado de las tiendas disponibles
     selectTiendas();
     selectCategorias();
 }
+
+// FUNCIONES AÑADIR PRODUCTO DWEC06
 
 function formAnadirProducto(){
     let categorias = storeHouse.getterCategories();
@@ -42,6 +41,7 @@ function formAnadirProducto(){
     document.getElementById('contenido').innerHTML = formProductos;
 }
 
+// función que se ejecuta en el onchange para cuando seleccionamos un tipo de producto diferente
 function cambioTipo(){
     let tipoProducto = document.getElementById('selectTipoProducto').value;
     let formProductos="";
@@ -68,6 +68,7 @@ function cambioTipo(){
     }
     document.getElementById('divTipo').innerHTML = formProductos;
 }
+
 function anadeProducto(){
     // registro de elementos del formulario
     let tipoProducto = document.getElementById('selectTipoProducto').value;
@@ -113,6 +114,7 @@ function anadeProducto(){
     storeHouse.addProduct(producto);
 }
 
+// FUNCIONES ELIMINAR PRODUCTO DWEC06
 function formEliminarProducto(){
     let productos = storeHouse.getProductosAlmacen;
     let producto = productos.next();
@@ -121,9 +123,27 @@ function formEliminarProducto(){
         selectProductos += "<option value="+ producto.value.getSerialNumber +">" + producto.value.getNameProduct + "</option>";
         producto = productos.next();
     }
-    selectProductos += "</select>";
-    selectProductos += "<button>Eliminar Producto</button>"
+    selectProductos += "</select><br><br>";
+    selectProductos += "<button onclick='eliminarProducto()'>Eliminar Producto</button>"
     document.getElementById('contenido').innerHTML = selectProductos;
+}
+
+function eliminarProducto(){
+    let productoIndex = document.getElementById('selectProductos').value; // aquí guardo el serialNumber del producto
+    let productosAlmacen = storeHouse.getProductosAlmacen;
+    let encontrado = false;
+    let producto = productosAlmacen.next();
+    while (!producto.done){
+        if (producto.value.getSerialNumber == productoIndex){
+            encontrado = true;
+            storeHouse.removeProduct(productoIndex);
+            console.log('Producto eliminado correctamente')
+        }
+        producto = productosAlmacen.next();
+    }
+    if (!encontrado){
+        console.log('El producto no se ha encontrado en el almacén');
+    }
 }
 
 function formGestionaCategoria(){
@@ -177,7 +197,6 @@ function seleccionTiendas(){
     let tiendaSeleccionada = document.getElementById('selectTiendas').value;
     tiendas.forEach(tienda => {
         if (tienda.getCif == tiendaSeleccionada){
-            history.pushState(tiendaSeleccionada, tiendaSeleccionada, url+ '/' + tienda.getNameStore)
             encontrado = true;
         }
     });
@@ -200,7 +219,6 @@ function selectCategorias(){
 
 function seleccionCategorias(){
     categoriaSeleccionada = document.getElementById('selectCategorias').value;
-    history.pushState(categoriaSeleccionada, categoriaSeleccionada, url+ '/' + categoriaSeleccionada)
     catalogoCategoria(categoriaSeleccionada);
 }
 
@@ -231,7 +249,6 @@ function catalogoTienda(cif){
     let productosTienda;
     tiendas.forEach(elem => {
         if (elem.getCif == cif){
-            history.pushState(elem.getNameStore, elem.getNameStore, url+ '/' + elem.getNameStore)
             productosTienda = elem.getProducts;
         }
     });

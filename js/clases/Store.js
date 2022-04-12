@@ -66,4 +66,13 @@ class Store{
     set setStock(stock){
         this.#stock = stock;
     }
+
+    eliminarProducto(productoABorrar){
+        for (let i=0; i<this.#products.length; i++){ // Recorro cada producto de las tiendas
+            if (this.#products[i].getSerialNumber == productoABorrar){
+                this.#products.splice(i, 1); // Borro los productos de la lista tiendas que coincidan 
+                this.#stock.splice(i,1); // Borro el stock del producto borrado
+            }
+        }
+    }
 }
