@@ -85,13 +85,13 @@ let StoreHouse = (function () { //La función anónima devuelve un método getIn
             removeCategory(category){
                 let encontrado = false;
                 for (let i= 0; i<this.#categoriasAlmacen.length; i++){
-                    if (this.#categoriasAlmacen[i].getTitle == category.getTitle){
+                    if (this.#categoriasAlmacen[i].getTitle == category){
                         encontrado = true;
                         // Recorro los productos para sustituir los que pertenezcan a la categoría que acaba de ser borrada por la categoría por defecto
                         for (let j = 0; j<this.#productosAlmacen.length; j++){
-                            for (let x = 0; x<this.#productosAlmacen[j]['categories'].length; x++){
-                                if (category.getTitle == this.#productosAlmacen[j]['categories'][x]){
-                                    this.#productosAlmacen[j]['categories'][x] = this.categoriaPorDefectoAlmacen.getTitle;
+                            for (let x = 0; x<this.#productosAlmacen[j].length; x++){
+                                if (category == this.#productosAlmacen[j][x]){
+                                    this.#productosAlmacen[j][x] = this.categoriaPorDefectoAlmacen;
                                 }
                             }
                         }
@@ -103,6 +103,7 @@ let StoreHouse = (function () { //La función anónima devuelve un método getIn
                     throw 'Excepción → La categoría no se ha registrado';
                 }
             }
+
             // Método addProduct
             addProduct(product){
                 if (product == null){
@@ -244,25 +245,9 @@ let StoreHouse = (function () { //La función anónima devuelve un método getIn
             removeShop(tiendaABorrar){
                 let tiendaEncontrada = false;
                 for (let i = 0; i<this.#tiendasAlmacen.length; i++){ // recorro las tiendas para buscar la tienda que quiero borrar
-                    if (this.#tiendasAlmacen[i]['store'].getCif == tiendaABorrar.getCif){ // compruebo que la tienda que me han pasado, existe
-                        tiendaEncontrada = true;
-                        for (let j=0; j<this.#tiendasAlmacen[j].length; j++){ // recorro de nuevo las tiendas para saber cuál es la tienda por defecto
-                            if (this.#tiendasAlmacen[j]['store'].getCif == this.tiendaPorDefectoAlmacen.getCif){
-                                // recorro los productos de la tienda a borrar comparándolos con los productos de la tienda por defecto
-                                for (let x=0; x<this.#tiendasAlmacen[i]['products'].length; x++){ // recorro los productos de la tienda a borrar 
-                                    if (!this.#tiendasAlmacen[j]['products'].includes(this.#tiendasAlmacen[i]['products'][x])){ // comprobamos si existen en la tienda por defecto y, si no existen, los añadimos
-                                        this.#tiendasAlmacen[j]['products'].push(this.#tiendasAlmacen[i]['products'][x])
-                                    }
-                                    
-                                }
-                            }
-                        }
+                    if (this.#tiendasAlmacen[i].getCif == tiendaABorrar){ // compruebo que la tienda que me han pasado, existe
                         this.#tiendasAlmacen.splice(i, 1);
-                        return this.#tiendasAlmacen.length;
                     }
-                }
-                if (!tiendaEncontrada){
-                    throw 'Excepción → La tienda no existe'
                 }
             }
             // Método getShopProducts

@@ -82,6 +82,13 @@
         set setCategories(categories){
             this.#categories = categories;
         }
+        borraCategoria(categoriaAEliminar){ // método creado para DWEC06
+            for (let i = 0; i<this.#categories.length; i++){
+                if (categoriaAEliminar == this.#categories[i]){
+                    this.#categories.splice(i, 1); // si coincide lo elimino
+                }
+            }
+        }
     }
     Object.defineProperty(Product.prototype, "serialNumber", {enumerable: true});
     Object.defineProperty(Product.prototype, "nameProduct", {enumerable: true});
