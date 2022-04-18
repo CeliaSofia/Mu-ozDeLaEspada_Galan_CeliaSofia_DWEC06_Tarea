@@ -41,7 +41,218 @@ nav a:hover{
 nav a{
     color: white;
     text-decoration: none;
+    padding: 10px;
 }
 #msjInformativo{
     color: red;
+}
+
+
+/* FORMULARIOS */
+
+#seleccionTiendas{
+    width: 90%;
+    height: 30px;
+    margin-left: 20px;
+    display: grid;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+#seleccionCategorias{
+    width: 90%;
+    height: 30px;
+    margin-left: 20px;
+    display: grid;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.botFormPrincipal{
+    padding: 10px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    border: 1px solid black;
+    background: royalblue;
+    cursor: pointer;
+    margin-top: 10px;
+    color: white;
+}
+
+.tablaCatalogo{
+    width: 90%;
+    height: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    display: grid;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+#formProductosAnadir{
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+#formProductosAnadir input {
+    width: 90%;
+    height: 30px;
+    margin-left: 20px;
+    display: grid;
+}
+
+/* BOTÓN */
+.botForm {
+    padding: 0.8em 1em;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    border: 1px solid black;
+    background: royalblue;
+    cursor: pointer;
+    color: white;
+}
+
+.formCategoria{
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+#selectProductos{
+    width: 90%;
+    height: 30px;
+    margin-left: 20px;
+    display: grid;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+#divCategoria{
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+#divCategoria input {
+    width: 90%;
+    height: 30px;
+    margin-left: 20px;
+    display: grid;
+}
+
+#selectCategorias{
+    width: 90%;
+    height: 30px;
+    margin-left: 20px;
+    display: grid;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.formTienda{
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.formTienda input{
+    width: 90%;
+    height: 30px;
+    margin-left: 20px;
+    display: grid;
+}
+
+#divTienda{
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+#divTienda input {
+    width: 90%;
+    height: 30px;
+    margin-left: 20px;
+    display: grid;
+}
+
+#selectTiendas{
+    width: 90%;
+    height: 30px;
+    margin-left: 20px;
+    display: grid;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+#formStock{
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.formStock input{
+    width: 90%;
+    height: 30px;
+    margin-left: 20px;
+    display: grid;
+}
+
+#divStock{
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+#divStock input{
+    width: 90%;
+    height: 30px;
+    margin-left: 20px;
+    display: grid;
 }

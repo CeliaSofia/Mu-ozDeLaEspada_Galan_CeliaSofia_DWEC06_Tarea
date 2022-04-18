@@ -1,17 +1,22 @@
 let storeHouse; // lo declaramos como global
 let myWindow = null;
 let ventanasAbiertas = [];
+let cargado = false;
 
 function cargaInicial(){
+    document.getElementById('msjInformativo').innerHTML = '';
+    if (!cargado){
+        cargaDatos()
+        cargado=true;
+    }
     muestraTiendas(); // selección y mostrado de las tiendas disponibles
     selectTiendas();
     selectCategorias();
-    document.getElementById('msjInformativo').innerHTML = '';
-
 }
 
 // FUNCIONES AÑADIR PRODUCTO DWEC06
 function formAnadirProducto(){
+    document.getElementById('msjInformativo').innerHTML = '';
     let categorias = storeHouse.getterCategories();
     let formProductos = "<form id='formProductosAnadir' class='formProductos'>";
     formProductos += "Tipo de producto:"
@@ -20,12 +25,12 @@ function formAnadirProducto(){
         formProductos += '<option value="Moto">Moto</option>';
         formProductos += '<option value="Bicicleta">Bicicleta</option>';
     formProductos += "</select><br><br>";
-    formProductos += "Número de serie:<input type='text' id='numSerie'></input><br><br>";
-    formProductos += "Nombre del producto:<input type='text' id='nombreProducto'></input><br><br>";
-    formProductos += "Descripción:<input type='text' id='descripcionProducto'></input><br><br>";
-    formProductos += "Precio:<input type='number' id='precioProducto'></input><br><br>";
-    formProductos += "Tasa:<input type='text' id='tasaProducto'></input><br><br>";
-    formProductos += "Imagen:<input type='file' id='imagenProducto'></input><br><br>";
+    formProductos += "Número de serie * :<input type='text' id='numSerie' required></input><br>";
+    formProductos += "Nombre del producto * :<input type='text' id='nombreProducto' required></input><br>";
+    formProductos += "Descripción:<input type='text' id='descripcionProducto'></input><br>";
+    formProductos += "Precio * :<input type='number' id='precioProducto' required></input><br>";
+    formProductos += "Tasa:<input type='text' id='tasaProducto'></input><br>";
+    formProductos += "Imagen:<input type='file' id='imagenProducto'></input><br>";
     formProductos += "Categoria: ";
     formProductos += ' <select class="selectCategoriaAnadir" id="selectCategoriaAnadir" multiple>';
     categorias.forEach(categoria => {
@@ -33,12 +38,12 @@ function formAnadirProducto(){
     });
     formProductos += "</select><br><br>";
     formProductos += "<div id='divTipo'>";
-    formProductos += "Color:<input type='text' id='colorCoche'></input><br><br>";           
-    formProductos += "Tipo:<input type='text' id='tipoCoche'></input><br><br>";           
-    formProductos += "Power:<input type='text' id='powerCoche'></input><br><br>";
+    formProductos += "Color:<input type='text' id='colorCoche'></input><br>";           
+    formProductos += "Tipo:<input type='text' id='tipoCoche'></input><br>";           
+    formProductos += "Power:<input type='text' id='powerCoche'></input><br>";
     formProductos += "</div>";
     formProductos += "</form>";
-    formProductos += "<button onclick='anadeProducto()'>Añadir Producto</button>";
+    formProductos += "<button class='botForm' onclick='anadeProducto()'>Añadir Producto</button>";
     document.getElementById('contenido').innerHTML = formProductos;
 }
 
@@ -49,19 +54,19 @@ function cambioTipo(){
 
     switch(tipoProducto){
         case "Coche":
-            formProductos += "Color:<input type='text' id='colorCoche'></input><br><br>";           
-            formProductos += "Tipo:<input type='text' id='tipoCoche'></input><br><br>";           
-            formProductos += "Power:<input type='text' id='powerCoche'></input><br><br>";           
+            formProductos += "Color:<input type='text' id='colorCoche'></input><br>";           
+            formProductos += "Tipo:<input type='text' id='tipoCoche'></input><br>";           
+            formProductos += "Power:<input type='text' id='powerCoche'></input><br>";           
             break;
         case "Moto":
-            formProductos += "Tipo:<input type='text' id='tipoMoto'></input><br><br>";       
-            formProductos += "Color:<input type='text' id='colorMoto'></input><br><br>";               
-            formProductos += "Power:<input type='text' id='powerMoto'></input><br><br>";           
+            formProductos += "Tipo:<input type='text' id='tipoMoto'></input><br>";       
+            formProductos += "Color:<input type='text' id='colorMoto'></input><br>";               
+            formProductos += "Power:<input type='text' id='powerMoto'></input><br>";           
             break;
         case "Bicicleta":
-            formProductos += "Tipo:<input type='text' id='tipoBici'></input><br><br>";       
-            formProductos += "Material:<input type='text' id='materialBici'></input><br><br>";               
-            formProductos += "Talla:<input type='text' id='tallaBici'></input><br><br>";           
+            formProductos += "Tipo:<input type='text' id='tipoBici'></input><br>";       
+            formProductos += "Material:<input type='text' id='materialBici'></input><br>";               
+            formProductos += "Talla:<input type='text' id='tallaBici'></input><br>";           
 
             break;
         default:
@@ -73,15 +78,45 @@ function cambioTipo(){
 function anadeProducto(){
     // registro de elementos del formulario
     let tipoProducto = document.getElementById('selectTipoProducto').value;
-    let numSerie = document.getElementById('numSerie').value;
-    let nombreProducto = document.getElementById('nombreProducto').value;
+    let numSerie = document.getElementById('numSerie');
+    let nombreProducto = document.getElementById('nombreProducto');
     let descripcionProducto = document.getElementById('descripcionProducto').value;
-    let precioProducto = document.getElementById('precioProducto').value;
+    let precioProducto = document.getElementById('precioProducto');
     let tasaProducto = document.getElementById('tasaProducto').value;
     let imagenProducto = document.getElementById('imagenProducto').value;
     let categoria = document.getElementById('selectCategoriaAnadir');
     let categorias = categoria.options;
     let listaCategorias = []
+    let error = false;
+    // validación número de serie
+    if (numSerie.value != ""){
+        numSerie = numSerie.value;
+    }
+    else{    
+        numSerie.style.border = "3px solid red";
+        error = true;
+    }
+    // validación nombre de producto
+    if (nombreProducto.value != ""){
+        nombreProducto = nombreProducto.value;
+    }
+    else{    
+        nombreProducto.style.border = "3px solid red";
+        error = true;
+    }
+    // validación precio
+    if (isNaN(precioProducto.value) || (precioProducto.value != "")){ // si el precio no es numérico
+        precioProducto = precioProducto.value;
+    }
+    else{    
+        precioProducto.style.border = "3px solid red";
+        error = true;
+    }
+    if (error){
+        document.getElementById('msjInformativo').innerHTML = 'Faltan campos obligatorios por rellenar';
+        return false;
+    }
+
     for (let i = 0; i < categorias.length; i++){
         if (categorias[i].selected == true){
             listaCategorias.push(categorias[i].value);
@@ -119,6 +154,7 @@ function anadeProducto(){
 
 // FUNCIONES ELIMINAR PRODUCTO DWEC06
 function formEliminarProducto(){
+    document.getElementById('msjInformativo').innerHTML = '';
     let productos = storeHouse.getProductosAlmacen;
     let producto = productos.next();
     let selectProductos = "<select name='selectProductos' id='selectProductos'>";
@@ -127,7 +163,7 @@ function formEliminarProducto(){
         producto = productos.next();
     }
     selectProductos += "</select><br><br>";
-    selectProductos += "<button onclick='eliminarProducto()'>Eliminar Producto</button>"
+    selectProductos += "<button class='botForm' onclick='eliminarProducto()'>Eliminar Producto</button>"
     document.getElementById('contenido').innerHTML = selectProductos;
 }
 
@@ -151,6 +187,7 @@ function eliminarProducto(){
 
 // FUNCIONES PARA AÑADIR Y ELIMINAR CATEGORÍAS DWEC06
 function formGestionaCategoria(){
+    document.getElementById('msjInformativo').innerHTML = '';
     let formCategoria = "<form class='formCategoria'>";
     formCategoria += 'Elige una opción para gestionar las categorías...'
     formCategoria += "<select id='eligeAccionCategoria' onChange='cambioAccionCategoria()'>";
@@ -159,9 +196,9 @@ function formGestionaCategoria(){
     formCategoria += "</select><br><br>";
     formCategoria += "</form>"
     formCategoria += "<div id='divCategoria'>";
-    formCategoria += "Título:<input type='text' id='catIndex'></input><br><br>";
-    formCategoria += "Descripción:<input type='text' id='descripcionCat'></input><br><br>";
-    formCategoria += "<button onclick='anadeCategoria()'>Añadir Categoría</button>";
+    formCategoria += "Título * :<input type='text' id='catIndex' required></input><br>";
+    formCategoria += "Descripción:<input type='text' id='descripcionCat'></input><br>";
+    formCategoria += "<button class='botForm' onclick='anadeCategoria()'>Añadir Categoría</button>";
     formCategoria += "</div>";
     
     document.getElementById('contenido').innerHTML = formCategoria;
@@ -173,30 +210,43 @@ function cambioAccionCategoria(){
     let formCategoria="";
     switch(accionElegidaCat){
         case "Añadir":
-            formCategoria += "Título:<input type='text' id='catIndex'></input><br><br>";
-            formCategoria += "Descripción:<input type='text' id='descripcionCat'></input><br><br>";
-            formCategoria += "<button onclick='anadeCategoria()>Añadir Categoría</button>";       
+            document.getElementById('msjInformativo').innerHTML = '';
+            formCategoria += "Título * :<input type='text' id='catIndex' required></input><br>";
+            formCategoria += "Descripción:<input type='text' id='descripcionCat'></input><br>";
+            formCategoria += "<button class='botForm' onclick='anadeCategoria()'>Añadir Categoría</button>";       
             break;
         case "Eliminar":
+            document.getElementById('msjInformativo').innerHTML = '';
             formCategoria += "<select id='selectCategorias''>";
                 listaCategorias.forEach(cat => {
                     formCategoria += '<option value="'+cat.getTitle+'">'+cat.getTitle+'</option>';
                 });
-            formCategoria += "</select><br><br>";
-            formCategoria += "<button onclick='eliminaCategoria()'>Eliminar Categoría</button>";
+            formCategoria += "</select><br>";
+            formCategoria += "<button class='botForm' onclick='eliminaCategoria()'>Eliminar Categoría</button>";
     }
     document.getElementById('divCategoria').innerHTML = formCategoria;
 }
 
 function anadeCategoria(){
-    let catIndex = document.getElementById('catIndex').value;
+    document.getElementById('msjInformativo').innerHTML = '';
+    let catIndex = document.getElementById('catIndex');
     let descripcionCat = document.getElementById('descripcionCat').value;
+    // validación Título
+    if (catIndex.value != ""){ 
+        catIndex = catIndex.value;
+    }
+    else{    
+        catIndex.style.border = "3px solid red";
+        document.getElementById('msjInformativo').innerHTML = 'Faltan campos obligatorios por rellenar';
+        return false;
+    }
     let categoria = new Category(catIndex, descripcionCat);
     storeHouse.addCategory(categoria);
     document.getElementById('msjInformativo').innerHTML = 'Categoría añadida correctamente';
 }
 
 function eliminaCategoria(){
+    document.getElementById('msjInformativo').innerHTML = '';
     let catIndex = document.getElementById('selectCategorias').value; // guardo el nombre de la categoría
     let categoriasAlmacen = storeHouse.getCategoriasAlmacen;
     let productosAlmacen = storeHouse.getProductosAlmacen;
@@ -222,6 +272,7 @@ function eliminaCategoria(){
 
 // FUNCIONES PARA AÑADIR Y ELIMINAR TIENDAS DWEC06
 function formGestionaTienda(){
+    document.getElementById('msjInformativo').innerHTML = '';
     let listaProductos = storeHouse.getProductosAlmacen; //guardo los productos para recorrerlos y añadirlos al select del formulario
     let producto = listaProductos.next();
     let formTienda = "<form class='formTienda'>";
@@ -232,78 +283,76 @@ function formGestionaTienda(){
     formTienda += "</select><br><br>";
     formTienda += "</form>";
     formTienda += "<div id='divTienda'>"
-        formTienda += "Cif:<input type='text' id='cifTienda'></input><br><br>";
-        formTienda += "Nombre de la tienda:<input type='text' id='nombreTienda'></input><br><br>";
+        formTienda += "Cif * :<input type='text' id='cifTienda' required></input><br><br>";
+        formTienda += "Nombre de la tienda * :<input type='text' id='nombreTienda' required></input><br><br>";
         formTienda += "Dirección:<input type='text' id='direccionTienda'></input><br><br>";
         formTienda += "Teléfono:<input type='number' id='telfTienda'></input><br><br>";
         formTienda += "Coordenadas:<input type='text' id='coordenadasTienda'></input><br><br>";
-/*        formTienda += "Productos:<select id='productosTienda' multiple><br><br>";
-        while (!producto.done){
-            formTienda += '<option value="'+producto.value.getSerialNumber+'">'+producto.value.getNameProduct+'</option>';
-            producto = listaProductos.next();
-        } 
-        formTienda += "</select><br><br>";
-        formTienda += "Stock:<input type='number' id='stockTienda'></input><br><br>";*/
-        formTienda += "<button onclick='anadeTienda()'>Añadir Tienda</button>";
+        formTienda += "<button class='botForm' onclick='anadeTienda()'>Añadir Tienda</button>";
     formTienda += "</div>";
     document.getElementById('contenido').innerHTML = formTienda;
 }
 function cambioAccionTienda(){
     let accionElegidaTienda = document.getElementById('eligeAccionTienda').value;
     let listaTiendas = storeHouse.getterShops();
-    //let listaProductos = storeHouse.getProductosAlmacen; //guardo los productos para recorrerlos y añadirlos al select del formulario
-    //let producto = listaProductos.next();
     let formTienda="";
     switch(accionElegidaTienda){
         case "Añadir":
-            formTienda += "Cif:<input type='text' id='cifTienda'></input><br><br>";
-            formTienda += "Nombre de la tienda:<input type='text' id='nombreTienda'></input><br><br>";
+            document.getElementById('msjInformativo').innerHTML = '';
+            formTienda += "Cif * :<input type='text' id='cifTienda' required></input><br><br>";
+            formTienda += "Nombre de la tienda * :<input type='text' id='nombreTienda' required></input><br><br>";
             formTienda += "Dirección:<input type='text' id='direccionTienda'></input><br><br>";
             formTienda += "Teléfono:<input type='number' id='telfTienda'></input><br><br>";
             formTienda += "Coordenadas:<input type='text' id='coordenadasTienda'></input><br><br>";
-            //formTienda += "Productos:<select id='productosTienda' multiple><br><br>";
-/*             while (!producto.done){
-                formTienda += '<option value="'+producto.value.getSerialNumber+'">'+producto.value.getNameProduct+'</option>';
-                producto = listaProductos.next();
-            } */
-            //formTienda += "</select><br><br>";            
-            //formTienda += "Stock:<input type='number' id='stockTienda'></input><br><br>";
-            formTienda += "<button onclick='anadeTienda()'>Añadir Tienda</button>";    
+            formTienda += "<button class='botForm' onclick='anadeTienda()'>Añadir Tienda</button>";    
             break;
         case "Eliminar":
+            document.getElementById('msjInformativo').innerHTML = '';
             formTienda += "<select id='selectTiendas''>";
                 listaTiendas.forEach(tienda => {
                     formTienda += '<option value="'+tienda.getCif+'">'+tienda.getNameStore+'</option>';
                 });
             formTienda += "</select><br><br>";
-            formTienda += "<button onclick='eliminaTienda()'>Eliminar Tienda</button>";
+            formTienda += "<button class='botForm' onclick='eliminaTienda()'>Eliminar Tienda</button>";
     }
     document.getElementById('divTienda').innerHTML = formTienda;
 }
 function anadeTienda(){
+    document.getElementById('msjInformativo').innerHTML = '';
     // guardo los atributos del formulario en variables
-    let cifTienda = document.getElementById('cifTienda').value;
-    let nombreTienda = document.getElementById('nombreTienda').value;
+    let error = false;
+    let cifTienda = document.getElementById('cifTienda');
+    let nombreTienda = document.getElementById('nombreTienda');
     let direccionTienda = document.getElementById('direccionTienda').value;
     let telfTienda = document.getElementById('telfTienda').value;
     let coordenadasTienda = document.getElementById('coordenadasTienda').value;
-    //let productosTienda = document.getElementById('productosTienda').value;
-    //let stockTienda = document.getElementById('stockTienda').value;
-    //let listaProductos = storeHouse.getProductosAlmacen; //guardo los productos para recorrerlos y añadirlos al select del formulario
-    //let producto = listaProductos.next();
-/*     while (!producto.done){
-        if (producto.value.getSerialNumber == productoIndex){
-            encontrado = true;
-            storeHouse.removeProduct(productoIndex);
-            document.getElementById('msjInformativo').innerHTML = 'Producto eliminado correctamente';
-        }
-        producto = productosAlmacen.next();
-    } */
+
+    // validación número de serie
+    if (cifTienda.value != ""){
+        cifTienda = cifTienda.value;
+    }
+    else{    
+        cifTienda.style.border = "3px solid red";
+        error = true;
+    }
+    // validación nombre de producto
+    if (nombreTienda.value != ""){
+        nombreTienda = nombreTienda.value;
+    }
+    else{    
+        nombreTienda.style.border = "3px solid red";
+        error = true;
+    }
+    if (error){
+        document.getElementById('msjInformativo').innerHTML = 'Faltan campos obligatorios por rellenar';
+        return false;
+    }
     let tienda = new Store(cifTienda, nombreTienda, direccionTienda, telfTienda, coordenadasTienda, [], []);
     storeHouse.addShop(tienda);
     document.getElementById('msjInformativo').innerHTML = 'Tienda añadida correctamente';
 }
 function eliminaTienda(){
+    document.getElementById('msjInformativo').innerHTML = '';
     let tiendaSeleccionada = document.getElementById('selectTiendas').value; // guardo el cif de la tienda
     let tiendasAlmacen = storeHouse.getTiendasAlmacen;
     let tienda = tiendasAlmacen.next();
@@ -315,25 +364,185 @@ function eliminaTienda(){
         tienda = tiendasAlmacen.next();
     }
 }
+// FORMULARIO PARA GESTIONAR EL STOCK DWEC06
+function formGestionaStock(){
+    document.getElementById('msjInformativo').innerHTML = '';
+    let listaTiendas = storeHouse.getterShops();
+    let listaProductos = storeHouse.getProductosAlmacen;
+    let formStock = "<form id='formStock'>";
+        formStock += 'Elige una opción para gestionar el stock...';
+        formStock += "<select id='eligeAccionStock' onChange='cambioAccionStock()'>";
+            formStock += '<option value="Añadir">Añadir</option>';
+            formStock += '<option value="Eliminar">Eliminar</option>';
+        formStock += "</select><br>";
+    formStock += "</form>";
+    formStock += "<div id='divStock'>";
+        formStock += "Tiendas:<select id='tiendasStock'><br><br>";
+            listaTiendas.forEach(tienda => {
+                formStock += '<option value="'+tienda.getCif+'">'+tienda.getNameStore+'</option>';
+            });
+        formStock += "</select><br><br>"; 
+        formStock += "Productos:<select id='productosStock'><br><br>";
+            let producto = listaProductos.next();
+            while(!producto.done){
+                formStock += '<option value="'+producto.value.getSerialNumber+'">'+producto.value.getNameProduct+'</option>';
+                producto = listaProductos.next();
+            }                
+        formStock += "</select><br><br>";     
+        
+        formStock += "Stock * :<input type='number' id='stockTienda' required></input><br><br>";
+        formStock += "<button class='botForm' onclick='anadeStock()'>Añadir stock</button>";  
+    formStock += "</div>";
+        document.getElementById('contenido').innerHTML = formStock;
+}
+
+function anadeStock(){
+    document.getElementById('msjInformativo').innerHTML = '';
+    let index;
+    let listaTiendas = storeHouse.getterShops();
+    let listaProductos = storeHouse.getProductosAlmacen;
+    let tiendaIndex = document.getElementById('tiendasStock').value;
+    let productoIndex = document.getElementById('productosStock').value;
+    let stock = document.getElementById('stockTienda');
+    let productoElegido;
+    let encontrado = false;
+    let producto = listaProductos.next();
+    let productosTienda;
+    // validación stock
+    if (isNaN(stock.value) || (stock.value != "")){ // si el stock no es numérico o está vacío
+        stock = stock.value;
+    }
+    else{    
+        stock.style.border = "3px solid red";
+        document.getElementById('msjInformativo').innerHTML = 'Faltan campos obligatorios por rellenar';
+        return false;
+    }
+    while(!producto.done){ // recorro los productos
+        if (producto.value.getSerialNumber == productoIndex){
+            productoElegido = producto.value; // introduzco el objeto entero en la variable
+        }
+        producto = listaProductos.next();
+    } 
+    listaTiendas.forEach(tienda => { // recorro las tiendas
+        if (tiendaIndex == tienda.getCif){
+            productosTienda = tienda.getProducts;
+            for (let i = 0; i<productosTienda.lenth; i++){ // recorro los productos de una tienda específica
+                if (productosTienda[i].getCif == productoIndex){
+                    encontrado = true;
+                    index = i;
+                }
+            }
+            if (!encontrado){ // si no se ha encontrado → se inserta un nuevo producto y su stock
+                tienda.insertarProducto(productoElegido, stock);
+                document.getElementById('msjInformativo').innerHTML = 'Producto añadido correctamente';
+            }
+            else{ // si se encuentra → añadimos al stock la cantidad indicada
+                tienda.anadirStock(index, stock);
+                document.getElementById('msjInformativo').innerHTML = 'Stock añadido correctamente';
+            }
+        }
+    });
+}
+
+function cambioAccionStock(){
+    let accionElegidaStock = document.getElementById('eligeAccionStock').value;
+    let listaTiendas = storeHouse.getterShops();
+    let formStock="";
+    let tienda1="";
+    let primera = true;
+    let listaProductos = storeHouse.getProductosAlmacen;
+    switch(accionElegidaStock){
+        case "Añadir":
+            formStock += "Tiendas:<select id='tiendasStock'><br><br>";
+            listaTiendas.forEach(tienda => {
+                if(primera){
+                    primera = false;
+                    tienda1=tienda;
+                }
+                formStock += '<option value="'+tienda.getCif+'">'+tienda.getNameStore+'</option>';
+            });
+            formStock += "</select><br><br>"; 
+            formStock += "Productos:<select id='productosStock'><br><br>";
+            let producto = listaProductos.next();
+            while(!producto.done){
+                formStock += '<option value="'+producto.value.getSerialNumber+'">'+producto.value.getNameProduct+'</option>';
+                producto = listaProductos.next();
+            }                
+            formStock += "</select><br><br>";       
+            formStock += "Stock:<input type='number' id='stockTienda'></input><br><br>";
+            formStock += "<button class='botForm' onclick='anadeStock()'>Añadir stock</button>";    
+            break;
+        case "Eliminar":
+            formStock += "Tiendas:<select id='tiendasStock' onChange='cambiaTiendasProductos()'><br><br>";
+            listaTiendas.forEach(tienda => {
+                if(primera){
+                    primera = false;
+                    tienda1=tienda;
+                }
+                formStock += '<option value="'+tienda.getCif+'">'+tienda.getNameStore+'</option>';
+            });
+            formStock += "</select><br><br>";   
+            formStock += "Productos:<select id='productosStock'><br><br>";
+            listaProductos = tienda1.getProducts;
+            listaProductos.forEach(producto => {
+                formStock += '<option value="'+producto.getSerialNumber+'">'+producto.getNameProduct+'</option>';
+            });
+            formStock += "</select><br><br>";   
+            formStock += "<button  class='botForm' onclick='eliminaStock()'>Eliminar stock</button>";       
+    }
+    document.getElementById('divStock').innerHTML = formStock;
+}
+function eliminaStock(){
+    document.getElementById('msjInformativo').innerHTML = '';
+    let tiendaIndex = document.getElementById('tiendasStock').value;
+    let productoIndex = document.getElementById('productosStock').value;
+    let listaTiendas = storeHouse.getterShops();
+    listaTiendas.forEach(tienda => { // recorro las tiendas
+        if (tienda.getCif == tiendaIndex){
+            tienda.eliminarProducto(productoIndex);
+            document.getElementById('msjInformativo').innerHTML = 'Producto eliminado correctamente';
+        }
+    });
+}
+
+function cambiaTiendasProductos(){
+    document.getElementById('msjInformativo').innerHTML = '';
+    let listaTiendas = storeHouse.getterShops();
+    let accionElegidaTiendaStock = document.getElementById('tiendasStock').value;
+    let listaProductos = []; 
+    let options= "";
+    listaTiendas.forEach(tienda => { // recorro cada tienda
+        if (accionElegidaTiendaStock == tienda.getCif){
+            listaProductos = tienda.getProducts;
+            listaProductos.forEach(producto => {
+                options += '<option value="'+producto.getSerialNumber+'">'+producto.getNameProduct+'</option>';
+            });
+        }
+    });
+    document.getElementById("productosStock").innerHTML = options;
+            
+}
 
 function muestraTiendas(){
     let tiendas = storeHouse.getterShops();
-    let tablaTiendas = "<br><table class='tablaTiendas'><tr>";
+    let tablaTiendas = "<br></brZ><p>Buscar por tienda...</p>"
+    tablaTiendas += "<br><table class='tablaTiendas tablaCatalogo'><tr>";
     tiendas.forEach(tienda => {
         tablaTiendas += "<td onclick='catalogoTienda("+ tienda.getCif +");'>" + tienda.getNameStore + "</td>";
     });
-    tablaTiendas += "</tr></table>";
+    tablaTiendas += "</tr></table><br><br>";
     document.getElementById('contenido').innerHTML = tablaTiendas;
 }
 
 function selectTiendas(){
     let tiendas = storeHouse.getterShops();
-    let selectTiendas = "<select name='selectTiendas' id='selectTiendas'>";
+    let selectTiendas = "<p>Buscar por tienda o categoría...</p>"
+    selectTiendas += "<select name='seleccionTiendas' id='seleccionTiendas'>";
     tiendas.forEach(tienda => {
         selectTiendas += "<option value="+ tienda.getCif +">" + tienda.getNameStore + "</option>";
     });
     selectTiendas += "</select>";
-    selectTiendas += "<button onclick='seleccionTiendas();'>Ir a tienda</button>";
+    selectTiendas += "<button class='botFormPrincipal' onclick='seleccionTiendas();'>Ir a tienda</button>";
     
     document.getElementById('contenido').innerHTML += selectTiendas;
 } 
@@ -341,7 +550,7 @@ function selectTiendas(){
 function seleccionTiendas(){
     let encontrado = false;
     let tiendas = storeHouse.getterShops();
-    let tiendaSeleccionada = document.getElementById('selectTiendas').value;
+    let tiendaSeleccionada = document.getElementById('seleccionTiendas').value;
     tiendas.forEach(tienda => {
         if (tienda.getCif == tiendaSeleccionada){
             encontrado = true;
@@ -355,17 +564,17 @@ function seleccionTiendas(){
 
 function selectCategorias(){
     let categorias = storeHouse.getterCategories();
-    let selectCategorias = "<select name='selectCategorias' id='selectCategorias'>";
+    let selectCategorias = "<select name='seleccionCategorias' id='seleccionCategorias'>";
     categorias.forEach(categoria => {
         selectCategorias += "<option>" + categoria.getTitle + "</option>";
     });
     selectCategorias += "</select>";
-    selectCategorias += "<button onclick='seleccionCategorias();'>Ir a categoría</button>";
+    selectCategorias += "<button class='botFormPrincipal' onclick='seleccionCategorias();'>Ir a categoría</button>";
     document.getElementById('contenido').innerHTML += selectCategorias;
 }
 
 function seleccionCategorias(){
-    categoriaSeleccionada = document.getElementById('selectCategorias').value;
+    categoriaSeleccionada = document.getElementById('seleccionCategorias').value;
     catalogoCategoria(categoriaSeleccionada);
 }
 
@@ -382,7 +591,7 @@ function catalogoCategoria(title){
         producto = productos.next();
     }
 
-    let tablaProductos = '<br><table>';
+    let tablaProductos = '<br><table class="tablaCatalogo">';
     productosFinal.forEach(producto => {
         tablaProductos += '<tr onclick="fichaProducto('+producto.getSerialNumber+');"><td>'+ producto.getNameProduct +'</td></tr>';
     });
@@ -411,7 +620,7 @@ function catalogoTienda(cif){
             }
         });
     });
-    let tablaProductos = '<br><table class="tablaProductos">';
+    let tablaProductos = '<br><table class="tablaProductos tablaCatalogo">';
     for (var [categoria, productos] of _categoriasTienda){ // recorro el map cogiendo la clave y valor
         tablaProductos += '<tr><th>'+ categoria +'</th>';
         productos.forEach(producto => {

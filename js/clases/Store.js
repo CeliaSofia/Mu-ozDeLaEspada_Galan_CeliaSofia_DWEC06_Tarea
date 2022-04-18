@@ -75,4 +75,11 @@ class Store{
             }
         }
     }
+    insertarProducto(producto, stock){
+        this.#products.push(producto);
+        this.#stock.push(stock);
+    }
+    anadirStock(index, stock){
+        this.#stock[index] += stock; // le añado el stock indicado al que ya teníamos registrado
+    }
 }
