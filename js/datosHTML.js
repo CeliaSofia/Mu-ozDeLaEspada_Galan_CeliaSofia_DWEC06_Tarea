@@ -4,10 +4,19 @@ let ventanasAbiertas = [];
 let cargado = false;
 
 function cargaInicial(){
-    document.getElementById('msjInformativo').innerHTML = '';
     if (!cargado){
         cargaDatos()
         cargado=true;
+    }
+    //document.cookie = 'username='; // Borramos la cookie
+    let cookie = document.cookie; // obtenemos la cookie creada en comprobarUsuario()
+    document.getElementById('contenido').innerHTML = "";
+    document.getElementById('msjInformativo').innerHTML = '';
+    if (cookie != "username=admin"){ // si la cookie no está registrada, mostramos el formulario
+        formLogin();
+    }else{
+        document.getElementById('msjInformativoUser').innerHTML = '';
+        mostrarDesconectar();
     }
     muestraTiendas(); // selección y mostrado de las tiendas disponibles
     selectTiendas();
@@ -17,6 +26,7 @@ function cargaInicial(){
 // FUNCIONES AÑADIR PRODUCTO DWEC06
 function formAnadirProducto(){
     document.getElementById('msjInformativo').innerHTML = '';
+    document.getElementById('msjInformativoUser').innerHTML = '';
     let categorias = storeHouse.getterCategories();
     let formProductos = "<form id='formProductosAnadir' class='formProductos'>";
     formProductos += "Tipo de producto:"
@@ -155,6 +165,7 @@ function anadeProducto(){
 // FUNCIONES ELIMINAR PRODUCTO DWEC06
 function formEliminarProducto(){
     document.getElementById('msjInformativo').innerHTML = '';
+    document.getElementById('msjInformativoUser').innerHTML = '';
     let productos = storeHouse.getProductosAlmacen;
     let producto = productos.next();
     let selectProductos = "<select name='selectProductos' id='selectProductos'>";
@@ -188,6 +199,7 @@ function eliminarProducto(){
 // FUNCIONES PARA AÑADIR Y ELIMINAR CATEGORÍAS DWEC06
 function formGestionaCategoria(){
     document.getElementById('msjInformativo').innerHTML = '';
+    document.getElementById('msjInformativoUser').innerHTML = '';
     let formCategoria = "<form class='formCategoria'>";
     formCategoria += 'Elige una opción para gestionar las categorías...'
     formCategoria += "<select id='eligeAccionCategoria' onChange='cambioAccionCategoria()'>";
@@ -211,12 +223,14 @@ function cambioAccionCategoria(){
     switch(accionElegidaCat){
         case "Añadir":
             document.getElementById('msjInformativo').innerHTML = '';
+            document.getElementById('msjInformativoUser').innerHTML = '';
             formCategoria += "Título * :<input type='text' id='catIndex' required></input><br>";
             formCategoria += "Descripción:<input type='text' id='descripcionCat'></input><br>";
             formCategoria += "<button class='botForm' onclick='anadeCategoria()'>Añadir Categoría</button>";       
             break;
         case "Eliminar":
             document.getElementById('msjInformativo').innerHTML = '';
+            document.getElementById('msjInformativoUser').innerHTML = '';
             formCategoria += "<select id='selectCategorias''>";
                 listaCategorias.forEach(cat => {
                     formCategoria += '<option value="'+cat.getTitle+'">'+cat.getTitle+'</option>';
@@ -229,6 +243,7 @@ function cambioAccionCategoria(){
 
 function anadeCategoria(){
     document.getElementById('msjInformativo').innerHTML = '';
+    document.getElementById('msjInformativoUser').innerHTML = '';
     let catIndex = document.getElementById('catIndex');
     let descripcionCat = document.getElementById('descripcionCat').value;
     // validación Título
@@ -247,6 +262,7 @@ function anadeCategoria(){
 
 function eliminaCategoria(){
     document.getElementById('msjInformativo').innerHTML = '';
+    document.getElementById('msjInformativoUser').innerHTML = '';
     let catIndex = document.getElementById('selectCategorias').value; // guardo el nombre de la categoría
     let categoriasAlmacen = storeHouse.getCategoriasAlmacen;
     let productosAlmacen = storeHouse.getProductosAlmacen;
@@ -273,6 +289,7 @@ function eliminaCategoria(){
 // FUNCIONES PARA AÑADIR Y ELIMINAR TIENDAS DWEC06
 function formGestionaTienda(){
     document.getElementById('msjInformativo').innerHTML = '';
+    document.getElementById('msjInformativoUser').innerHTML = '';
     let listaProductos = storeHouse.getProductosAlmacen; //guardo los productos para recorrerlos y añadirlos al select del formulario
     let producto = listaProductos.next();
     let formTienda = "<form class='formTienda'>";
@@ -299,6 +316,7 @@ function cambioAccionTienda(){
     switch(accionElegidaTienda){
         case "Añadir":
             document.getElementById('msjInformativo').innerHTML = '';
+            document.getElementById('msjInformativoUser').innerHTML = '';
             formTienda += "Cif * :<input type='text' id='cifTienda' required></input><br><br>";
             formTienda += "Nombre de la tienda * :<input type='text' id='nombreTienda' required></input><br><br>";
             formTienda += "Dirección:<input type='text' id='direccionTienda'></input><br><br>";
@@ -308,6 +326,7 @@ function cambioAccionTienda(){
             break;
         case "Eliminar":
             document.getElementById('msjInformativo').innerHTML = '';
+            document.getElementById('msjInformativoUser').innerHTML = '';
             formTienda += "<select id='selectTiendas''>";
                 listaTiendas.forEach(tienda => {
                     formTienda += '<option value="'+tienda.getCif+'">'+tienda.getNameStore+'</option>';
@@ -319,6 +338,7 @@ function cambioAccionTienda(){
 }
 function anadeTienda(){
     document.getElementById('msjInformativo').innerHTML = '';
+    document.getElementById('msjInformativoUser').innerHTML = '';
     // guardo los atributos del formulario en variables
     let error = false;
     let cifTienda = document.getElementById('cifTienda');
@@ -353,6 +373,7 @@ function anadeTienda(){
 }
 function eliminaTienda(){
     document.getElementById('msjInformativo').innerHTML = '';
+    document.getElementById('msjInformativoUser').innerHTML = '';
     let tiendaSeleccionada = document.getElementById('selectTiendas').value; // guardo el cif de la tienda
     let tiendasAlmacen = storeHouse.getTiendasAlmacen;
     let tienda = tiendasAlmacen.next();
@@ -367,6 +388,7 @@ function eliminaTienda(){
 // FORMULARIO PARA GESTIONAR EL STOCK DWEC06
 function formGestionaStock(){
     document.getElementById('msjInformativo').innerHTML = '';
+    document.getElementById('msjInformativoUser').innerHTML = '';
     let listaTiendas = storeHouse.getterShops();
     let listaProductos = storeHouse.getProductosAlmacen;
     let formStock = "<form id='formStock'>";
@@ -398,6 +420,7 @@ function formGestionaStock(){
 
 function anadeStock(){
     document.getElementById('msjInformativo').innerHTML = '';
+    document.getElementById('msjInformativoUser').innerHTML = '';
     let index;
     let listaTiendas = storeHouse.getterShops();
     let listaProductos = storeHouse.getProductosAlmacen;
@@ -494,6 +517,7 @@ function cambioAccionStock(){
 }
 function eliminaStock(){
     document.getElementById('msjInformativo').innerHTML = '';
+    document.getElementById('msjInformativoUser').innerHTML = '';
     let tiendaIndex = document.getElementById('tiendasStock').value;
     let productoIndex = document.getElementById('productosStock').value;
     let listaTiendas = storeHouse.getterShops();
@@ -507,6 +531,7 @@ function eliminaStock(){
 
 function cambiaTiendasProductos(){
     document.getElementById('msjInformativo').innerHTML = '';
+    document.getElementById('msjInformativoUser').innerHTML = '';
     let listaTiendas = storeHouse.getterShops();
     let accionElegidaTiendaStock = document.getElementById('tiendasStock').value;
     let listaProductos = []; 
@@ -531,7 +556,7 @@ function muestraTiendas(){
         tablaTiendas += "<td onclick='catalogoTienda("+ tienda.getCif +");'>" + tienda.getNameStore + "</td>";
     });
     tablaTiendas += "</tr></table><br><br>";
-    document.getElementById('contenido').innerHTML = tablaTiendas;
+    document.getElementById('contenido').innerHTML += tablaTiendas;
 }
 
 function selectTiendas(){

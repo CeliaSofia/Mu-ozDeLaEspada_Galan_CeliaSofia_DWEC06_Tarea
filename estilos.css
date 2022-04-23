@@ -257,3 +257,26 @@ nav a{
     margin-left: 20px;
     display: grid;
 }
+
+/* DWEC07 */
+#navSecundario{
+    float: right;
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    color: royalblue;
+}
+#botDesconectar{
+    padding: 10px;
+    float: right;
+    border: 1px solid black;
+    background: rgb(225, 81, 65);
+    cursor: pointer;
+    color: white;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+#msjInformativoUser{
+    color: red;
+    font-size: 20px;
+}
