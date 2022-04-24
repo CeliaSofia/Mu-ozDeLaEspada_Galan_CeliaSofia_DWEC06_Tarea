@@ -16,7 +16,7 @@ function cargaInicial(){
         formLogin();
     }else{
         document.getElementById('msjInformativoUser').innerHTML = '';
-        mostrarDesconectar();
+        mostrarUsuario();
     }
     muestraTiendas(); // selección y mostrado de las tiendas disponibles
     selectTiendas();
@@ -659,7 +659,7 @@ function catalogoTienda(cif){
 
 function fichaProducto(serialNumber){
     let productos = storeHouse.getProductosAlmacen;
-    let productoImpreso;
+    let productoImpreso;    
     let producto = productos.next();
     while (!producto.done){
         if (producto.value.getSerialNumber == serialNumber){
@@ -691,6 +691,19 @@ function fichaProducto(serialNumber){
                         + ' precio: ' + productoImpreso.getPrice + ' Número de serie: ' 
                         + productoImpreso.getSerialNumber + ' Material: ' + productoImpreso.getMaterial + '<br>'
                         + ' Tipo: ' + productoImpreso.getType;
+    }
+    // comprobación para establecer favoritos DWEC07
+    if (document.cookie == 'username=admin'){ // si la cookie contiene el usuario admin
+        let checkeado = "";
+        if (typeof(Storage) !== "undefined") {
+            if (localStorage.getItem(productoImpreso.getSerialNumber)) { // si existe en la lista de favoritos de localStorage, lo checkeamos (mantenimiento del check)
+                checkeado = "checked";                
+            }
+        } else {
+            document.getElementById("msjInformativo").innerHTML = "Sorry, your browser does not support web storage...";
+        }
+        productoSacado += `<br><input type="checkbox" id="cbFavorito" name="cbFavorito" onChange="marcaFavorito()" value=`+productoImpreso.getSerialNumber+` `+checkeado+`>
+        <label for="cbFavorito">Favorito</label>`;
     }
     productoSacado += "<br><button onclick='nuevaVentana();'>Abrir en una nueva ventana</button>";
     productoSacado += "<br><button onclick='cierraVentana();'>Cerrar ventana</button>";
