@@ -1,0 +1,368 @@
+{
+    "nombreAlmacen": "almacen1",
+    "productosAlmacen": 
+        [{
+            "clase": "Coche",
+            "serialNumber": "111",
+            "nameProduct": "Audi",
+            "descriptionProduct": "A4",
+            "price": 30000,
+            "tax": 20,
+            "images": "imagen",
+            "categories": ["diesel"],
+            "type": "Berlina",
+            "color": "rojo",
+            "power": 140
+        },
+        {
+            "clase": "Coche",
+            "serialNumber": "222",
+            "nameProduct": "Toyota",
+            "descriptionProduct": "Prius",
+            "price": 37000,
+            "tax": 20,
+            "images": "imagen",
+            "categories": ["gasolina", "electrico"],
+            "type": "Monovolumen",
+            "color": "azul",
+            "power": 160
+        },
+        {
+            "clase": "Moto",
+            "serialNumber": "333",
+            "nameProduct": "Yamaha",
+            "descriptionProduct": "YZF-R1",
+            "price": 935,
+            "tax": 5,
+            "images": "imagen",
+            "categories": ["electrico", "ciudad"],
+            "type": "Montaña",
+            "color": "negro",
+            "power": 120
+        },
+        {
+            "clase": "Bicicleta",
+            "serialNumber": "444",
+            "nameProduct": "BMC",
+            "descriptionProduct": "TE01",
+            "price": 5000,
+            "tax": 5,
+            "images": "imagen",
+            "categories": ["electrico", "ciudad"],
+            "type": "Montaña",
+            "material": "negro",
+            "size": 120
+        },
+        {
+            "clase": "Bicicleta",
+            "serialNumber": "555",
+            "nameProduct": "orbea",
+            "descriptionProduct": "MX",
+            "price": 495,
+            "tax": 1,
+            "images": "imagen",
+            "categories": ["gasolina", "ciudad"],
+            "type": "Montaña",
+            "material": "gris",
+            "size": 120
+        },
+        {
+            "clase": "Bicicleta",
+            "serialNumber": "666",
+            "nameProduct": "trek",
+            "descriptionProduct": "MTB",
+            "price": 500,
+            "tax": 1,
+            "images": "imagen",
+            "categories": ["gasolina", "electrico", "ciudad"],
+            "type": "Ciudad",
+            "material": "rojo",
+            "size": 120
+        },
+        {
+            "clase": "Moto",
+            "serialNumber": "777",
+            "nameProduct": "honda",
+            "descriptionProduct": "MK2",
+            "price": 754,
+            "tax": 2,
+            "images": "imagen",
+            "categories": ["electrico", "carretea", "ciudad"],
+            "type": "Naked",
+            "color": "gris oscuro",
+            "power": 120
+        },
+        {
+            "clase": "Moto",
+            "serialNumber": "888",
+            "nameProduct": "suzuki",
+            "descriptionProduct": "M9",
+            "price": 519,
+            "tax": 2,
+            "images": "imagen",
+            "categories": ["carretea", "ciudad"],
+            "type": "Naked",
+            "color": "amarillo",
+            "power": 120
+        },
+        {
+            "clase": "Coche",
+            "serialNumber": "999",
+            "nameProduct": "fiat",
+            "descriptionProduct": "500",
+            "price": 55000,
+            "tax": 20,
+            "images": "imagen",
+            "categories": ["gasolina", "electrico"],
+            "type": "Monovolumen",
+            "color": "blanco",
+            "power": 160
+        }],
+    "categoriasAlmacen":
+        [{
+            "title": "gasolina",
+            "descriptionCategory" : "descripcion1"
+        },
+        {
+            "title": "diesel",
+            "descriptionCategory" : "descripcion2"
+        },
+        {
+            "title": "electrico",
+            "descriptionCategory" : "descripcion3"
+        },
+        {
+            "title": "carretera",
+            "descriptionCategory" : "descripcion4"
+        },
+        {
+            "title": "ciudad",
+            "descriptionCategory" : "descripcion5"
+        }],
+    "tiendasAlmacen":
+        [{
+            "cif": "111",
+            "nameStore": "automotor",
+            "adressStore": "madrid",
+            "phoneStore": 69999999,
+            "coordsStore": "madrid",
+            "products": [
+                {
+                    "clase": "Coche",
+                    "serialNumber": "222",
+                    "nameProduct": "Toyota",
+                    "descriptionProduct": "Prius",
+                    "price": 37000,
+                    "tax": 20,
+                    "images": "imagen",
+                    "categories": ["gasolina", "electrico"],
+                    "type": "Monovolumen",
+                    "color": "azul",
+                    "power": 160
+                },
+                {
+                    "clase": "Coche",
+                    "serialNumber": "111",
+                    "nameProduct": "Audi",
+                    "descriptionProduct": "A4",
+                    "price": 30000,
+                    "tax": 20,
+                    "images": "imagen",
+                    "categories": ["diesel"],
+                    "type": "Berlina",
+                    "color": "rojo",
+                    "power": 140
+                },
+                {
+                    "clase": "Coche",
+                    "serialNumber": "999",
+                    "nameProduct": "fiat",
+                    "descriptionProduct": "500",
+                    "price": 55000,
+                    "tax": 20,
+                    "images": "imagen",
+                    "categories": ["gasolina", "electrico"],
+                    "type": "Monovolumen",
+                    "color": "blanco",
+                    "power": 160
+                },
+                {
+                    "clase": "Moto",
+                    "serialNumber": "888",
+                    "nameProduct": "suzuki",
+                    "descriptionProduct": "M9",
+                    "price": 519,
+                    "tax": 2,
+                    "images": "imagen",
+                    "categories": ["carretea", "ciudad"],
+                    "type": "Naked",
+                    "color": "amarillo",
+                    "power": 120
+                },
+                {
+                    "clase": "Bicicleta",
+                    "serialNumber": "555",
+                    "nameProduct": "orbea",
+                    "descriptionProduct": "MX",
+                    "price": 495,
+                    "tax": 1,
+                    "images": "imagen",
+                    "categories": ["gasolina", "ciudad"],
+                    "type": "Montaña",
+                    "material": "gris",
+                    "size": 120
+                }
+            ],
+            "stock": [23, 12, 65, 11, 82]
+        },
+        {
+            "cif": "112",
+            "nameStore": "autobild",
+            "adressStore": "barcelona",
+            "phoneStore": 698745878,
+            "coordsStore": "barcelona",
+            "products": [
+                {
+                    "clase": "Coche",
+                    "serialNumber": "111",
+                    "nameProduct": "Audi",
+                    "descriptionProduct": "A4",
+                    "price": 30000,
+                    "tax": 20,
+                    "images": "imagen",
+                    "categories": ["diesel"],
+                    "type": "Berlina",
+                    "color": "rojo",
+                    "power": 140
+                },
+                {
+                    "clase": "Moto",
+                    "serialNumber": "333",
+                    "nameProduct": "Yamaha",
+                    "descriptionProduct": "YZF-R1",
+                    "price": 935,
+                    "tax": 5,
+                    "images": "imagen",
+                    "categories": ["electrico", "ciudad"],
+                    "type": "Montaña",
+                    "color": "negro",
+                    "power": 120
+                },
+                {
+                    "clase": "Moto",
+                    "serialNumber": "777",
+                    "nameProduct": "honda",
+                    "descriptionProduct": "MK2",
+                    "price": 754,
+                    "tax": 2,
+                    "images": "imagen",
+                    "categories": ["electrico", "carretea", "ciudad"],
+                    "type": "Naked",
+                    "color": "gris oscuro",
+                    "power": 120
+                },
+                {
+                    "clase": "Bicicleta",
+                    "serialNumber": "666",
+                    "nameProduct": "trek",
+                    "descriptionProduct": "MTB",
+                    "price": 500,
+                    "tax": 1,
+                    "images": "imagen",
+                    "categories": ["gasolina", "electrico", "ciudad"],
+                    "type": "Ciudad",
+                    "material": "rojo",
+                    "size": 120
+                },
+                {
+                    "clase": "Moto",
+                    "serialNumber": "888",
+                    "nameProduct": "suzuki",
+                    "descriptionProduct": "M9",
+                    "price": 519,
+                    "tax": 2,
+                    "images": "imagen",
+                    "categories": ["carretea", "ciudad"],
+                    "type": "Naked",
+                    "color": "amarillo",
+                    "power": 120
+                }
+            ],
+            "stock": [12, 44, 9, 11, 22]
+        },
+        {
+            "cif": "113",
+            "nameStore": "soloautos",
+            "adressStore": "valencia",
+            "phoneStore": 666555879,
+            "coordsStore": "valencia",
+            "products": [
+                {
+                    "clase": "Coche",
+                    "serialNumber": "222",
+                    "nameProduct": "Toyota",
+                    "descriptionProduct": "Prius",
+                    "price": 37000,
+                    "tax": 20,
+                    "images": "imagen",
+                    "categories": ["gasolina", "electrico"],
+                    "type": "Monovolumen",
+                    "color": "azul",
+                    "power": 160
+                },
+                {
+                    "clase": "Bicicleta",
+                    "serialNumber": "444",
+                    "nameProduct": "BMC",
+                    "descriptionProduct": "TE01",
+                    "price": 5000,
+                    "tax": 5,
+                    "images": "imagen",
+                    "categories": ["electrico", "ciudad"],
+                    "type": "Montaña",
+                    "material": "negro",
+                    "size": 120
+                },
+                {
+                    "clase": "Bicicleta",
+                    "serialNumber": "666",
+                    "nameProduct": "trek",
+                    "descriptionProduct": "MTB",
+                    "price": 500,
+                    "tax": 1,
+                    "images": "imagen",
+                    "categories": ["gasolina", "electrico", "ciudad"],
+                    "type": "Ciudad",
+                    "material": "rojo",
+                    "size": 120
+                },
+                {
+                    "clase": "Coche",
+                    "serialNumber": "999",
+                    "nameProduct": "fiat",
+                    "descriptionProduct": "500",
+                    "price": 55000,
+                    "tax": 20,
+                    "images": "imagen",
+                    "categories": ["gasolina", "electrico"],
+                    "type": "Monovolumen",
+                    "color": "blanco",
+                    "power": 160
+                },
+                {
+                    "clase": "Bicicleta",
+                    "serialNumber": "555",
+                    "nameProduct": "orbea",
+                    "descriptionProduct": "MX",
+                    "price": 495,
+                    "tax": 1,
+                    "images": "imagen",
+                    "categories": ["gasolina", "ciudad"],
+                    "type": "Montaña",
+                    "material": "gris",
+                    "size": 120
+                }
+            ],
+            "stock": [12, 55, 23, 13, 32]
+        }]
+}

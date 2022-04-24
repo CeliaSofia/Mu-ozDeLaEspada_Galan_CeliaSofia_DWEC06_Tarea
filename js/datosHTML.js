@@ -4,10 +4,6 @@ let ventanasAbiertas = [];
 let cargado = false;
 
 function cargaInicial(){
-    if (!cargado){
-        cargaDatos()
-        cargado=true;
-    }
     //document.cookie = 'username='; // Borramos la cookie
     let cookie = document.cookie; // obtenemos la cookie creada en comprobarUsuario()
     document.getElementById('contenido').innerHTML = "";
@@ -809,6 +805,7 @@ function cargaDatos(){
         storeHouse.addShop(automotorShop);
         storeHouse.addShop(autobildShop);
         storeHouse.addShop(soloautosShop);
+        console.log(JSON.stringify(audi));
     }
     catch (e){
         console.log('No se ha podido crear el almacén, error: ' + e);
